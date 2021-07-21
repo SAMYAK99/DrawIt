@@ -6,5 +6,6 @@ import android.view.View
 
 
 class DrawingView (context: Context , attributes: AttributeSet) : View (context , attributes) {
-    
+
+
 }
