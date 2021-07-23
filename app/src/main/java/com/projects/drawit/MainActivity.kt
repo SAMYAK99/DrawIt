@@ -1,11 +1,15 @@
 package com.projects.drawit
 
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
+import petrov.kristiyan.colorpicker.ColorPicker
+import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +22,33 @@ class MainActivity : AppCompatActivity() {
         ib_brush.setOnClickListener {
             showBrushSizeChooserDialog()
         }
+
+        colourPicker.setOnClickListener{
+           selectColourDialog()
+        }
     }
+
+
+    // This method is called when different Colours is selected
+    private fun selectColourDialog() {
+        val colourPicker = ColorPicker(this)
+        colourPicker.setOnFastChooseColorListener(object : ColorPicker.OnFastChooseColorListener {
+            override fun setOnFastChooseColorListener(position: Int, color: Int) {
+                drawingView.setColor(color)
+            }
+
+            override fun onCancel() {
+                colourPicker.dismissDialog()
+            }
+
+        })
+
+            .disableDefaultButtons(true)
+            .setRoundColorButton(true)
+            .setColumns(5)
+            .show();
+    }
+
 
     /**
      * Method is used to launch the dialog to select different brush sizes.

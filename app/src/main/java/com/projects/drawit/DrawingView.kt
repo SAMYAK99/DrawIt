@@ -26,7 +26,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var mBrushSize: Float = 0.toFloat() // A variable for stroke/brush size to draw on the canvas.
 
     // A variable to hold a color of the stroke.
-    private var color = Color.BLACK
+    private var color : Int = Color.BLACK
 
     // Main Canvas Path
     private var canvas: Canvas? = null
@@ -150,8 +150,8 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
 
     //sets the color of a store to selected color and able to draw on view using that color.
-    fun setColor(newColor: String) {
-        color = Color.parseColor(newColor)
+    fun setColor(newColor:Int) {
+        color = newColor
         mDrawPaint!!.color = color
     }
 

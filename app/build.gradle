@@ -47,4 +47,8 @@ dependencies {
     // Lotte Animation
     def lottieVersion = "3.4.4"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    // Colour Picker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+
 }
