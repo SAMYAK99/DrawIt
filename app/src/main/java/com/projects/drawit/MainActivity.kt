@@ -50,6 +50,11 @@ class MainActivity : AppCompatActivity() {
                 request_storage_permission()
             }
         }
+
+        // Undo
+        ib_undo.setOnClickListener{
+            drawing_view.onClickUndo()
+        }
     }
 
 

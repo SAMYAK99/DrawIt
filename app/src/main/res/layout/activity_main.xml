@@ -49,6 +49,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fl_drawing_view_container">
 
+
+        <ImageButton
+            android:id="@+id/ib_undo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="Brush Image"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/undo" />
+
+
         <ImageButton
             android:id="@+id/gallery"
             android:layout_width="80dp"
