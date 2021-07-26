@@ -1,14 +1,12 @@
 package com.projects.drawit
 
 import android.app.Dialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
 import petrov.kristiyan.colorpicker.ColorPicker
-import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        drawingView.setSizeForBrush(20.toFloat()) // Setting the default brush size to drawing view.
+        drawing_view.setSizeForBrush(20.toFloat()) // Setting the default brush size to drawing view.
 
       // Selecting the Brush Size
         ib_brush.setOnClickListener {
@@ -34,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val colourPicker = ColorPicker(this)
         colourPicker.setOnFastChooseColorListener(object : ColorPicker.OnFastChooseColorListener {
             override fun setOnFastChooseColorListener(position: Int, color: Int) {
-                drawingView.setColor(color)
+                drawing_view.setColor(color)
             }
 
             override fun onCancel() {
@@ -59,18 +57,18 @@ class MainActivity : AppCompatActivity() {
         brushDialog.setTitle("Brush size :")
         val smallBtn = brushDialog.small_brush
         smallBtn.setOnClickListener(View.OnClickListener {
-            drawingView.setSizeForBrush(10.toFloat())
+            drawing_view.setSizeForBrush(10.toFloat())
             brushDialog.dismiss()
         })
         val mediumBtn = brushDialog.medium_brush
         mediumBtn.setOnClickListener(View.OnClickListener {
-            drawingView.setSizeForBrush(20.toFloat())
+            drawing_view.setSizeForBrush(20.toFloat())
             brushDialog.dismiss()
         })
 
         val largeBtn = brushDialog.large_brush
         largeBtn.setOnClickListener(View.OnClickListener {
-            drawingView.setSizeForBrush(30.toFloat())
+            drawing_view.setSizeForBrush(30.toFloat())
             brushDialog.dismiss()
         })
 
