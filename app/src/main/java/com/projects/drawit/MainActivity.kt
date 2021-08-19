@@ -4,13 +4,19 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
@@ -23,6 +29,8 @@ import petrov.kristiyan.colorpicker.ColorPicker
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.OutputStream
+import kotlin.system.measureTimeMillis
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         //Saving
         ib_save.setOnClickListener{
             if(isReadStorageAllowed()){
-                BitmapAsyncTask(getBitmapFromView(fl_drawing_view_container)).execute();
+               saveMediaToStorage(getBitmapFromView(fl_drawing_view_container))
             }
             else{
                 request_storage_permission()
@@ -202,7 +210,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-     // Create bitmap from view and returns it
+
+
+    // Create bitmap from view and returns it
     private fun getBitmapFromView(view: View): Bitmap {
         //Define a bitmap with the same size as the view.
         // CreateBitmap : Returns a mutable bitmap with the specified width and height
@@ -224,60 +234,57 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // Saving the bitmap in device
-    @SuppressLint("StaticFieldLeak")
-     private inner class BitmapAsyncTask (val mBitmap: Bitmap):
-         AsyncTask<Any,Void,String>() {
-        override fun doInBackground(vararg p0: Any?): String {
-            var result = ""
-            if (mBitmap != null) {
 
-                try {
-                    val bytes = ByteArrayOutputStream()
-                    mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
-                    val f = File(
-                        externalCacheDir!!.absoluteFile.toString()
-                                + File.separator + "DrawingApp_" + System.currentTimeMillis() / 1000 + ".jpg"
-                    )
 
-                    val fo = FileOutputStream(f)
-                    fo.write(bytes.toByteArray())
-                    fo.close()
-                    result = f.absolutePath
-                } catch (e: Exception) {
-                    result = ""
-                    e.printStackTrace()
 
+    // Saving Image in Gallery
+    private fun saveMediaToStorage(bitmap: Bitmap) {
+
+        val filename = "${System.currentTimeMillis()}.jpg"
+        var fos: OutputStream? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            contentResolver?.also { resolver ->
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
+                val imageUri: Uri? =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                fos = imageUri?.let { resolver.openOutputStream(it) }
+
+
+                // Sharing the Image
+                val shareIntent = Intent()
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+                shareIntent.type = "image/jpg" // The MIME type of the data being handled by this intent.
+                startActivity(
+                    Intent.createChooser(
+                        shareIntent,
+                        "Share"
+                    )
+                )
+
+
             }
-            return result
+        } else {
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
+        }
+        fos?.use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+            Toast.makeText(this,"Saved", Toast.LENGTH_SHORT).show()
         }
 
-
-        override fun onPostExecute(result: String) {
-            super.onPostExecute(result)
-
-//            cancelProgressDialog()
-
-            if (result!=null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "File saved successfully :$result",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Something went wrong while saving the file.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        }
     }
 
 
-    companion object {
+
+
+companion object {
         private const val STORAGE_PERMISSION_CODE = 1
         private const val GALLERY = 2
     }
