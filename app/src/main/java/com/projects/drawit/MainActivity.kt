@@ -1,10 +1,16 @@
 package com.projects.drawit
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -15,6 +21,9 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_brush_size.*
 import petrov.kristiyan.colorpicker.ColorPicker
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 
 class MainActivity : AppCompatActivity() {
@@ -161,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode== STORAGE_PERMISSION_CODE){
-            if(grantResults.isNotEmpty()&&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if(grantResults.size != null &&grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "Now you can read Storage Files", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -180,6 +189,29 @@ class MainActivity : AppCompatActivity() {
             this, Manifest.permission.READ_EXTERNAL_STORAGE
         )
         return result == PackageManager.PERMISSION_GRANTED
+    }
+
+
+
+     // Create bitmap from view and returns it
+    private fun getBitmapFromView(view: View): Bitmap {
+        //Define a bitmap with the same size as the view.
+        // CreateBitmap : Returns a mutable bitmap with the specified width and height
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        //Bind a canvas to it
+        val canvas = Canvas(returnedBitmap)
+        //Get the view's background
+        val bgDrawable = view.background
+        if (bgDrawable != null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas)
+        } else {
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE)
+        }
+        // draw the view on the canvas
+        view.draw(canvas)
+        return returnedBitmap
     }
 
 

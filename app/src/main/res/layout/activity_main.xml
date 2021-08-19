@@ -52,8 +52,8 @@
 
         <ImageButton
             android:id="@+id/ib_undo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Brush Image"
@@ -64,8 +64,8 @@
 
         <ImageButton
             android:id="@+id/gallery"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="@color/white"
             android:layout_marginBottom="4dp"
@@ -76,8 +76,8 @@
 
         <ImageButton
             android:id="@+id/ib_brush"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Brush Image"
@@ -87,8 +87,8 @@
 
         <ImageButton
             android:id="@+id/colourPicker"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@color/white"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
@@ -96,9 +96,19 @@
             android:scaleType="fitXY"
             android:src="@drawable/color_button" />
 
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="Save to Gallery"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_save_24" />
+
+
     </LinearLayout>
-
-
 
 
     />
