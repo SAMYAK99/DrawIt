@@ -19,6 +19,13 @@
 
 
 ## 📷 Working Demo
+<table style={border:"none"}><tr>
+  <tr>
+ <td> <img src="./gifs/two.gif" width="250" height="500" />  <td>
+ <td><img src="./gifs/one.gif" width="250" height="500" /> <td>
+ <td><img src="./gifs/three.gif" width="250" height="500" /> <td>
+ </tr>
+  </table>
 
 ## 🛠 Tech Used
 - Android
