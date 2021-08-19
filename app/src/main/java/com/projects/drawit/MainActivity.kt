@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -63,6 +62,16 @@ class MainActivity : AppCompatActivity() {
         // Undo
         ib_undo.setOnClickListener{
             drawing_view.onClickUndo()
+        }
+
+        //Saving
+        ib_save.setOnClickListener{
+            if(isReadStorageAllowed()){
+                BitmapAsyncTask(getBitmapFromView(fl_drawing_view_container)).execute();
+            }
+            else{
+                request_storage_permission()
+            }
         }
     }
 
@@ -212,6 +221,59 @@ class MainActivity : AppCompatActivity() {
         // draw the view on the canvas
         view.draw(canvas)
         return returnedBitmap
+    }
+
+
+    // Saving the bitmap in device
+    @SuppressLint("StaticFieldLeak")
+     private inner class BitmapAsyncTask (val mBitmap: Bitmap):
+         AsyncTask<Any,Void,String>() {
+        override fun doInBackground(vararg p0: Any?): String {
+            var result = ""
+            if (mBitmap != null) {
+
+                try {
+                    val bytes = ByteArrayOutputStream()
+                    mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+                    val f = File(
+                        externalCacheDir!!.absoluteFile.toString()
+                                + File.separator + "DrawingApp_" + System.currentTimeMillis() / 1000 + ".jpg"
+                    )
+
+                    val fo = FileOutputStream(f)
+                    fo.write(bytes.toByteArray())
+                    fo.close()
+                    result = f.absolutePath
+                } catch (e: Exception) {
+                    result = ""
+                    e.printStackTrace()
+
+                }
+            }
+            return result
+        }
+
+
+        override fun onPostExecute(result: String) {
+            super.onPostExecute(result)
+
+//            cancelProgressDialog()
+
+            if (result!=null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "File saved successfully :$result",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Something went wrong while saving the file.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        }
     }
 
 
