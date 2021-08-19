@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:background="@drawable/back"
         android:padding="1dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_paint_colors"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -33,13 +32,14 @@
                android:id="@+id/drawing_view"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:background="#30FFFFFF"/>
+               />
 
     </FrameLayout>
 
 
     <LinearLayout
         android:id="@+id/ll_paint_colors"
+        android:background="#A9AEC8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -52,22 +52,22 @@
 
         <ImageButton
             android:id="@+id/ib_undo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Brush Image"
-            android:background="@color/white"
+            android:background="#A9AEC8"
             android:scaleType="fitXY"
             android:src="@drawable/undo" />
 
 
         <ImageButton
             android:id="@+id/gallery"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_margin="5dp"
-            android:background="@color/white"
+            android:background="#A9AEC8"
             android:layout_marginBottom="4dp"
             android:contentDescription="Colour Picker"
             android:scaleType="fitXY"
@@ -76,20 +76,20 @@
 
         <ImageButton
             android:id="@+id/ib_brush"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Brush Image"
-            android:background="@color/white"
+            android:background="#A9AEC8"
             android:scaleType="fitXY"
             android:src="@drawable/ic_brush" />
 
         <ImageButton
             android:id="@+id/colourPicker"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@color/white"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="#A9AEC8"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Colour Picker"
@@ -98,9 +98,9 @@
 
         <ImageButton
             android:id="@+id/ib_save"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@color/white"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:background="#A9AEC8"
             android:layout_margin="5dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="Save to Gallery"
