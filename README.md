@@ -9,6 +9,9 @@
 #### 🎨  Are you looking for the best drawing app for your pocket? Do you want to draw something creative, but you have no paper? You are in the right place!
 
 
+<a href='https://play.google.com/store/apps/details?id=com.projects.drawit'><img align='center' height='85' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'></a>
+
+
 ## 🔥 Features
 - 📌 Works offline & online! Paint and scribble without the internet!
 - 📌 Select from multiple size brushes
